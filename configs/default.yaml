@@ -1,0 +1,59 @@
+encoder:
+  latent_dim: 64
+  conv_channels: [32, 64, 64]
+  pad_h: 7
+  pad_w: 7
+  in_channels: 3
+
+world_model:
+  hidden_dim: 128
+  action_dim: 16
+  max_actions: 9
+  state_dim: 16
+  num_blocks: 2
+  rollout_horizon: 5
+
+ppo:
+  lr: 3e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  num_ensemble_heads: 5
+  hidden_dim: 128
+
+planning:
+  k_rollouts: 10
+  horizon: 5
+  gamma: 0.99
+
+uncertainty:
+  threshold: 1.0
+  fallback_max_prob: 0.6
+
+training:
+  encoder_epochs: 30
+  encoder_batch_size: 256
+  encoder_lr: 1e-3
+  encoder_target_mse: 0.1
+  world_model_epochs: 100
+  world_model_batch_size: 64
+  world_model_lr: 3e-4
+  world_model_transitions_per_game: 50000
+  world_model_games_for_multistep: 5000
+  ppo_target_winrate: 0.7
+  ppo_max_episodes: 1000
+
+evaluation:
+  num_games: 1000
+
+games:
+  tictactoe:
+    rows: 3
+    cols: 3
+    num_actions: 9
+    win_length: 3
+  connect4:
+    rows: 6
+    cols: 7
+    num_actions: 7
+    win_length: 4
